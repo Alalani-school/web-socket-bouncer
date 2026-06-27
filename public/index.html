@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>WebSocket Test</h1>
+    <button onclick="sendMessage()">Send Message</button>
+    <pre id="log"></pre>
+
+    <script>
+      const protocol = location.protocol === "https:" ? "wss" : "ws";
+      const socket = new WebSocket(`${protocol}://${location.host}`);
+
+      socket.onopen = () => log("connected ✅");
+      socket.onmessage = (event) => log(event.data);
+      socket.onerror = () => log("socket error ❌");
+      socket.onclose = () => log("socket closed");
+
+      function sendMessage() {
+        socket.send("yo render");
+      }
+
+      function log(msg) {
+        document.getElementById("log").textContent += msg + "\n";
+      }
+    </script>
+  </body>
+</html>
