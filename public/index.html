@@ -6,6 +6,9 @@
     <pre id="log"></pre>
 
     <script>
+      setInterval(() => {
+        socket.send("[PING]");
+      },20000);
       const protocol = location.protocol === "https:" ? "wss" : "ws";
       const socket = new WebSocket(`${protocol}://${location.host}`);
 
