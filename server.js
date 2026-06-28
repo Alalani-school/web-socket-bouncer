@@ -10,7 +10,11 @@ wss.on("connection", (ws) => {
   ws.send("connected to server");
   ws.on("message", (message) => {
     console.log("received:", message.toString());
-    ws.send(message);
+    for (const client of wss.clients) {
+      if (client.readyState === client.OPEN && client !== ws) {
+        client.send(message.toString());
+      }
+    }
   });
 });
 const PORT = process.env.PORT || 3000;
