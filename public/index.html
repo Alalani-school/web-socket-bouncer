@@ -26,8 +26,8 @@
       function sendMessage() {
         const message = document.getElementById("message").value;
         const username = document.getElementById("username").value;
-        socket.send(username + " :" + message);
-        log(username + " :" + message);
+        socket.send(username + ": " + message);
+        log(username + ": " + message);
         messageField.value = '';
       }
 
