@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <h1>WebSocket Test</h1>
-    <button onclick="sendMessage()">Send Message</button>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body style="text-align: center">
+    <h1>C4E Group Chat</h1>
     <pre id="log"></pre>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <input type="text" id="username" name="username" placeholder="Username">
+    <br>
+    <textarea id="message" name="message" rows="4" cols="100" placeholder="Message"></textarea> <button onClick="sendMessage()">sendMessage</button>
 
     <script>
+      const messageField = document.getElementById("message");
       setInterval(() => {
         socket.send("[PING]");
       },20000);
@@ -18,12 +26,22 @@
       socket.onclose = () => log("socket closed");
 
       function sendMessage() {
-        socket.send("yo render");
+        const message = document.getElementById("message").value;
+        const username = document.getElementById("username").value;
+        socket.send(username + " :" + message);
+        log(username + " :" + message);
+        messageField.value = '';
       }
 
       function log(msg) {
         document.getElementById("log").textContent += msg + "\n";
       }
+      messageField.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault(); 
+          sendMessage();
+        }
+      });
     </script>
   </body>
 </html>
