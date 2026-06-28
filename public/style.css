@@ -19,7 +19,7 @@ body {
 
 #log {
     width: 80%;
-    height: 400px;
+    height: 800px;
     margin: auto;
     border: 1px solid black;
     overflow-y: auto;
