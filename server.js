@@ -10,9 +10,11 @@ wss.on("connection", (ws) => {
   ws.send("connected to server");
   ws.on("message", (message) => {
     console.log("received:", message.toString());
-    for (const client of wss.clients) {
-      if (client.readyState === client.OPEN && client !== ws) {
-        client.send(message.toString());
+    if(!message === "[PING]") {
+      for (const client of wss.clients) {
+        if (client.readyState === client.OPEN && client !== ws) {
+          client.send(message.toString());
+        }
       }
     }
   });
