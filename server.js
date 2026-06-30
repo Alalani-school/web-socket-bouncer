@@ -6,7 +6,7 @@ const server = http.createServer(app);
 let now = new Date();
 const welcomeMessage = {
   "TYPE":"WELCOME",
-  "MESSAGE":"Sucessfully connected to server",
+  "MESSAGE":"Successfully connected to server",
   "DATE":now
 }
 let onlineUsers = [];
@@ -17,7 +17,7 @@ wss.on("connection", (ws) => {
   ws.send(JSON.stringify(welcomeMessage));
   ws.on("message", (message) => {
     console.log("received:", message.toString());
-    if(message !== "[PING]") {
+    if(message.toString() !== "[PING]") {
       let jsonMessage = JSON.parse(message.toString());
       if(jsonMessage.TYPE === "LOGON") onlineUsers.push(jsonMessage.MESSAGE);
       else if(jsonMessage.TYPE == "LOGOFF") if(onlineUsers.indexOf(jsonMessage.MESSAGE) > -1) onlineUsers.splice(onlineUsers.indexOf(jsonMessage.MESSAGE), 1);
