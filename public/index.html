@@ -12,6 +12,7 @@
     <textarea id="message" name="message" rows="4" cols="100" placeholder="Message"></textarea>
 
     <script>
+      let onlineUsers = [];
       const messageField = document.getElementById("message");
       setInterval(() => {
         socket.send("[PING]");
@@ -20,18 +21,29 @@
       const socket = new WebSocket(`${protocol}://${location.host}`);
 
       socket.onopen = () => log("connected ✅");
-      socket.onmessage = (event) => log(event.data);
+      socket.onmessage = (event) => process(event.data);
       socket.onerror = () => log("socket error ❌");
       socket.onclose = () => log("socket closed");
 
       function sendMessage() {
         const message = document.getElementById("message").value;
         const username = document.getElementById("username").value;
-        socket.send(username + ": " + message);
+        let messageData = {
+          "TYPE":"USERMESSAGE",
+          "MESSAGE":username + ": " + message
+        }
+        socket.send(JSON.stringify(messageData));
         log(username + ": " + message);
         messageField.value = '';
       }
-
+      function process(msg) {
+        let jsonMessage = JSON.parse(msg);
+        if(jsonMessage.TYPE === "ONLINE") {
+          onlineUsers = jsonMessage.MESSAGE;
+          document.getElementById("onlineUsers").textContent = "Online Users: " + onlineUsers.join(", ");
+        }
+        else log(jsonMessage.MESSAGE);
+      }
       function log(msg) {
         document.getElementById("log").textContent += msg + "\n";
         const logBox = document.getElementById('log');
