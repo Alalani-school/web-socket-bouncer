@@ -27,6 +27,16 @@ body {
     white-space: pre-wrap;
     color: white;
 }
+#onlineUsers {
+  width: 80%;
+  height: 50px;
+  margine: auto;
+  border: 1px solid black;
+  overflow-y: auto;
+  text-align: center;
+  white-space: pre-wrap;
+  color: white;
+}
 h1 {
   color: white;
 }
