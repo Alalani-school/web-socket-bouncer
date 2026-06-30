@@ -26,6 +26,7 @@ wss.on("connection", (ws) => {
         "MESSAGE":onlineUsers
       }
       for(const client of wss.clients) if (client.readyState === client.OPEN) client.send(JSON.stringify(Data));
+      for(const client of wss.clients) if (client.readyState == client.open && client !== ws) client.send(message);
     }
     else {
       for (const client of wss.clients) {
